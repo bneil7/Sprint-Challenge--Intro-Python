@@ -24,6 +24,9 @@ class City:
         self.lat = lat
         self.lon = lon
 
+    def __str__(self):
+        return f"{self.name}, {self.lat}, {self.lon}"
+
 
 cities = []
 
@@ -33,12 +36,14 @@ def cityreader(cities=[]):
     # Ensure that the lat and lon values are all floats
     # For each city record, create a new City instance and add it to the
     # `cities` list
-    with open("cities.csv", newline='') as csvfile:
+    with open("cities.csv") as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            newcity = City(row[0], row[3], row[4])
+            if row[0] != "city":
+                newcity = City(row[0], float(row[3]), float(row[4]))
 
-            cities.append(newcity)
+                cities.append(newcity)
+                print(newcity)
 
         return cities
 
